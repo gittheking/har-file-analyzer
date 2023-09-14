@@ -1,25 +1,27 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import FileDropZone from "./components/FileDropZone";
+import "./App.css";
+import Layout, { Header, Content } from "antd/es/layout/layout";
+import { Typography } from "antd";
+import { FileSearchOutlined } from "@ant-design/icons";
+import { useAppSelector } from "./app/hooks";
+import FileDataView from "./components/FileDataView";
+
+const { Title } = Typography;
 
 function App() {
+  const file = useAppSelector((state) => state.harFile.data);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Layout className="app-layout">
+      <Header className="app-header">
+        <FileSearchOutlined className="app-header-icon" />
+        <Title level={2}>HAR File Analyzer</Title>
+      </Header>
+      <Content className="app-content">
+        {file ? <FileDataView file={file} /> : <FileDropZone />}
+      </Content>
+    </Layout>
   );
 }
 

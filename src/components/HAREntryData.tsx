@@ -11,6 +11,7 @@ import HARRequestView from "./HARRequestView";
 import HARResponseView from "./HARResponseView";
 import HARPostDataView from "./HARPostDataView";
 import { SelectedEntry } from "./FileDataView";
+import HARCookiesView from "./HARCookiesView";
 
 interface HAREntryDataProps {
   selectedEntry: SelectedEntry;
@@ -66,7 +67,11 @@ function getTabItems(entry: Entry | null) {
       key: "cookies",
       children: (
         <TabContainer>
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          {entry ? (
+            <HARCookiesView entry={entry} />
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </TabContainer>
       ),
     },

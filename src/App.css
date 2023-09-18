@@ -104,3 +104,7 @@
 .request-data-view .ant-collapse-header {
   padding: 12px 0;
 }
+
+.response-data-view .ant-collapse-header {
+  padding: 12px 0;
+}

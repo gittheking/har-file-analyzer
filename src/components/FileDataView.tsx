@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import { Row, Col } from "antd";
 import { Entry, HARFileData } from "../common/types";
 import FileTitleCard from "./FileTitleCard";
@@ -9,12 +9,25 @@ interface FileDataViewProps {
   file: HARFileData;
 }
 
-function FileDataView({ file }: FileDataViewProps) {
-  const [entry, setEntry] = useState<Entry | null>(null);
+export interface SelectedEntry {
+  entry: Entry;
+  index: number;
+}
 
-  function handleEntrySelect(selected: Entry | null) {
-    setEntry(selected);
-  }
+function FileDataView({ file }: FileDataViewProps) {
+  const [selected, setSelected] = useState<SelectedEntry | null>(null);
+
+  const handleEntrySelect = useCallback(
+    (nextSelected: SelectedEntry | null) => {
+      // toggle selected entry
+      if (nextSelected?.index === selected?.index) {
+        setSelected(null);
+      } else {
+        setSelected(nextSelected);
+      }
+    },
+    [selected]
+  );
 
   return (
     <Col span={24}>
@@ -22,12 +35,18 @@ function FileDataView({ file }: FileDataViewProps) {
         <Col span={24}>
           <FileTitleCard file={file} />
         </Col>
-        <Col span={12}>
-          <HAREntryList file={file.file} onEntrySelect={handleEntrySelect} />
+        <Col span={selected ? 12 : 24}>
+          <HAREntryList
+            file={file}
+            onEntrySelect={handleEntrySelect}
+            selectedEntry={selected}
+          />
         </Col>
-        <Col span={12}>
-          <HAREntryData entry={entry} />
-        </Col>
+        {selected && (
+          <Col span={12}>
+            <HAREntryData selectedEntry={selected} />
+          </Col>
+        )}
       </Row>
     </Col>
   );

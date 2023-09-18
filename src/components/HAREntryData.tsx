@@ -1,11 +1,19 @@
-import { useEffect, useState } from "react";
+import {
+  useEffect,
+  useState,
+  useReducer,
+  useMemo,
+  useLayoutEffect,
+} from "react";
 import { Empty, Tabs } from "antd";
 import { Entry } from "../common/types";
 import HARRequestView from "./HARRequestView";
+import HARResponseView from "./HARResponseView";
 import HARPostDataView from "./HARPostDataView";
+import { SelectedEntry } from "./FileDataView";
 
-interface HAREntryData {
-  entry: Entry | null;
+interface HAREntryDataProps {
+  selectedEntry: SelectedEntry;
 }
 
 interface TabContainerProps {
@@ -36,7 +44,11 @@ function getTabItems(entry: Entry | null) {
       key: "response",
       children: (
         <TabContainer>
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          {entry ? (
+            <HARResponseView entry={entry} />
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </TabContainer>
       ),
     },
@@ -89,23 +101,24 @@ function getTabItems(entry: Entry | null) {
   return items;
 }
 
-function HAREntryList({ entry }: HAREntryData) {
+function HAREntryList({ selectedEntry: { entry, index } }: HAREntryDataProps) {
   const [tabValue, setTabValue] = useState("request");
-  const [tabItems, setTabItems] = useState(getTabItems(entry));
 
-  useEffect(() => {
-    const items = getTabItems(entry);
-    console.log(items);
-    setTabItems(items);
+  // reset to request tab on entry update
+  useLayoutEffect(() => {
+    setTabValue("request");
   }, [entry]);
+
+  const items = useMemo(() => getTabItems(entry), [entry]);
 
   return (
     <Tabs
+      animated={{ inkBar: false, tabPane: false }}
       type="card"
       activeKey={tabValue}
       onChange={(tab) => setTabValue(tab)}
       tabBarStyle={{ marginBottom: 0 }}
-      items={tabItems}
+      items={items}
     />
   );
 }

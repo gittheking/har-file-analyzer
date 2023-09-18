@@ -66,10 +66,12 @@ export interface Response {
   statusText: string;
   httpVersion: string;
   cookies: Cookie[];
+  headers: Header[];
   content: ResponseContent;
   redirectURL: string;
   headersSize: number;
   bodySize: number;
+  _error?: string;
 }
 
 export type requestMethod =

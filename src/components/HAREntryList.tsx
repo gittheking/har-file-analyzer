@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Card, List, Row, Tag, Radio, RadioChangeEvent } from "antd";
-import { Entry, HARFile } from "../common/types";
+import { Entry, HARFile, HARFileData } from "../common/types";
+import { SelectedEntry } from "./FileDataView";
 
 interface HAREntryListProps {
-  file: HARFile;
-  onEntrySelect: (entry: Entry | null) => void;
+  file: HARFileData;
+  onEntrySelect: any;
+  selectedEntry: SelectedEntry | null;
 }
 
 function getStatusTagColor(status: number) {
@@ -70,37 +72,28 @@ function getEntriesByStatus(entries: Entry[], status: string): Entry[] {
   }
 }
 
-function HAREntryList({ file, onEntrySelect }: HAREntryListProps) {
+function HAREntryList({
+  file,
+  onEntrySelect,
+  selectedEntry,
+}: HAREntryListProps) {
   const [statusValue, setStatusValue] = useState("all");
-  const [entries, setEntries] = useState(file.log.entries);
-
-  function handleStatusChange(event: RadioChangeEvent) {
-    setStatusValue(event.target.value);
-  }
-
-  function toggleSelectedClass(selectedEl: Element | null) {
-    // find previously selected list item
-    const currentSelected = document.querySelector(".selected-entry");
-    // remove class to highlight item if exists
-    currentSelected?.classList.remove("selected-entry");
-    // add selected-entry class to next selected list item
-    selectedEl?.classList.add("selected-entry");
-  }
-
-  function handleOnEntrySelect(entry: Entry) {
-    return function (event: React.MouseEvent) {
-      if (event.target instanceof Element) {
-        const listItem = event.target.closest(".entry-list-item");
-        toggleSelectedClass(listItem);
-      }
-      onEntrySelect(entry);
-    };
-  }
+  const [entries, setEntries] = useState(file.file.log.entries);
 
   useEffect(() => {
-    const nextEntries = getEntriesByStatus(file.log.entries, statusValue);
+    const nextEntries = getEntriesByStatus(file.file.log.entries, statusValue);
     setEntries(nextEntries);
-  }, [statusValue, file.log.entries]);
+  }, [statusValue, file.file.log.entries]);
+
+  const handleStatusChange = useCallback((event: RadioChangeEvent) => {
+    setStatusValue(event.target.value);
+  }, []);
+
+  const handleOnEntrySelect = useCallback((entry: Entry, index: number) => {
+    return function (event: React.MouseEvent) {
+      onEntrySelect({ entry, index });
+    };
+  }, []);
 
   return (
     <Card className="har-entry-card">
@@ -128,9 +121,12 @@ function HAREntryList({ file, onEntrySelect }: HAREntryListProps) {
           const url = new URL(entry.request.url);
           return (
             <List.Item
-              className="entry-list-item"
-              key={entry.time + "-" + entry.request.url + "_" + idx}
-              onClick={handleOnEntrySelect(entry)}
+              className={
+                "entry-list-item" +
+                (selectedEntry?.index === idx ? " selected-entry" : "")
+              }
+              key={file.name + "-entry_" + idx}
+              onClick={handleOnEntrySelect(entry, idx)}
             >
               <div style={{ width: "47px" }}>
                 <Tag color={getStatusTagColor(entry.response.status)}>

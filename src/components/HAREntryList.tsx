@@ -105,12 +105,36 @@ function HAREntryList({
       >
         <Radio.Group value={statusValue} onChange={handleStatusChange}>
           <Radio value="all">All</Radio>
-          <Radio value="aborted">Aborted</Radio>
-          <Radio value="1xx">1xx</Radio>
-          <Radio value="2xx">2xx</Radio>
-          <Radio value="3xx">3xx</Radio>
-          <Radio value="4xx">4xx</Radio>
-          <Radio value="5xx">5xx</Radio>
+          <Radio value="aborted">
+            <Tag color="yellow" style={{ marginRight: 0 }}>
+              Aborted
+            </Tag>
+          </Radio>
+          <Radio value="1xx">
+            <Tag color="blue" style={{ marginRight: 0 }}>
+              1xx
+            </Tag>
+          </Radio>
+          <Radio value="2xx">
+            <Tag color="green" style={{ marginRight: 0 }}>
+              2xx
+            </Tag>
+          </Radio>
+          <Radio value="3xx">
+            <Tag color="blue" style={{ marginRight: 0 }}>
+              3xx
+            </Tag>
+          </Radio>
+          <Radio value="4xx">
+            <Tag color="red" style={{ marginRight: 0 }}>
+              4xx
+            </Tag>
+          </Radio>
+          <Radio value="5xx">
+            <Tag color="red" style={{ marginRight: 0 }}>
+              5xx
+            </Tag>
+          </Radio>
         </Radio.Group>
       </div>
       <List

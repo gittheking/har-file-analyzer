@@ -108,3 +108,15 @@
 .response-data-view .ant-collapse-header {
   padding: 12px 0;
 }
+
+.post-data-content {
+  margin-top: 16px;
+}
+
+.post-data-content > .ant-card-body {
+  padding: 0 16px 16px 16px;
+}
+
+.plain-text-content > pre {
+  white-space: pre-line;
+}

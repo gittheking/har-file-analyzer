@@ -89,11 +89,14 @@ function HAREntryList({
     setStatusValue(event.target.value);
   }, []);
 
-  const handleOnEntrySelect = useCallback((entry: Entry, index: number) => {
-    return function (event: React.MouseEvent) {
-      onEntrySelect({ entry, index });
-    };
-  }, []);
+  const handleOnEntrySelect = useCallback(
+    (entry: Entry, index: number) => {
+      return function (event: React.MouseEvent) {
+        onEntrySelect({ entry, index });
+      };
+    },
+    [onEntrySelect]
+  );
 
   return (
     <Card className="har-entry-card">
@@ -104,33 +107,35 @@ function HAREntryList({
         }}
       >
         <Radio.Group value={statusValue} onChange={handleStatusChange}>
-          <Radio value="all">All</Radio>
-          <Radio value="aborted">
+          <Radio name="all" value="all">
+            All
+          </Radio>
+          <Radio name="aborted" value="aborted">
             <Tag color="yellow" style={{ marginRight: 0 }}>
               Aborted
             </Tag>
           </Radio>
-          <Radio value="1xx">
+          <Radio name="1xx" value="1xx">
             <Tag color="blue" style={{ marginRight: 0 }}>
               1xx
             </Tag>
           </Radio>
-          <Radio value="2xx">
+          <Radio name="2xx" value="2xx">
             <Tag color="green" style={{ marginRight: 0 }}>
               2xx
             </Tag>
           </Radio>
-          <Radio value="3xx">
+          <Radio name="3xx" value="3xx">
             <Tag color="blue" style={{ marginRight: 0 }}>
               3xx
             </Tag>
           </Radio>
-          <Radio value="4xx">
+          <Radio name="4xx" value="4xx">
             <Tag color="red" style={{ marginRight: 0 }}>
               4xx
             </Tag>
           </Radio>
-          <Radio value="5xx">
+          <Radio name="5xx" value="5xx">
             <Tag color="red" style={{ marginRight: 0 }}>
               5xx
             </Tag>

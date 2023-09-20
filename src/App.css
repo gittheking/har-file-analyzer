@@ -120,3 +120,81 @@
 .plain-text-content > pre {
   white-space: pre-line;
 }
+
+.json-tree-container {
+  font-family: sfmono-regular,Consolas,liberation mono,Menlo,Courier,monospace;
+  color: rgb(129, 129, 129);
+}
+
+.tree-switcher-icon-clickable {
+  line-height: 24px;
+  width: 24px;
+  text-align: center;
+  cursor: pointer;
+  position: absolute;
+  left: 0;
+  border-radius: 4px;
+}
+
+.tree-switcher-icon-clickable:hover {
+  background-color: rgba(129, 129, 129, 0.1);
+}
+
+.tree-switcher-icon-clickable  svg {
+  transition: ease 0.3s transform;
+}
+
+.tree-switcher-icon-clickable.closed  svg {
+  transform: rotate(-90deg);
+}
+
+.tree-list {
+  list-style: none;
+  margin: 0;
+  padding: 24px 0;
+  position: relative;
+}
+
+.tree-list.object::before {
+  content: "{";
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+
+.tree-list.object::after {
+  content: "}";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+}
+
+.tree-list.array::before {
+  content: "[";
+  position: absolute;
+  left: 0;
+  top: 2px;
+}
+
+.tree-list.array::after {
+  content: "]";
+  position: absolute;
+  left: 0;
+  bottom: 2px;
+}
+
+.tree-list-item {
+  margin-left: 4px;
+  padding-left: 20px;
+  border-left: 1px solid rgba(129, 129, 129, 0.2);
+}
+
+.tree-list .key {
+  color: rgb(249, 69, 116);
+  font-weight: 500;
+}
+
+.tree-list .value {
+  color: rgb(154, 135, 238);
+  font-weight: 500;
+}

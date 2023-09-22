@@ -141,7 +141,7 @@
 }
 
 .tree-switcher-icon-clickable  svg {
-  transition: ease 0.3s transform;
+  transition: ease 0.1s transform;
 }
 
 .tree-switcher-icon-clickable.closed  svg {

@@ -10,12 +10,7 @@ interface CopyDataToClipboardButtonProps {
 }
 
 // Current supported types
-const supportedTypes = [
-  "text/plain",
-  "text/html",
-  "text/css",
-  "application/json",
-];
+const supportedTypes = ["text/plain", "application/json"];
 
 function isSupported(mimeType: string) {
   return supportedTypes.includes(mimeType);

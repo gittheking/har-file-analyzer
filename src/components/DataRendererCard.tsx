@@ -1,4 +1,4 @@
-import { Card, Tabs, Tooltip, Typography, message } from "antd";
+import { Card, Tabs, Typography, message } from "antd";
 import ContentRenderer from "./ContentRenderer";
 import DownloadDataButton from "./DownloadDataButton";
 import CopyDataToClipboardButton from "./CopyDataToClipboardButton";
@@ -76,7 +76,6 @@ function DataRendererCard({
               <DownloadDataButton
                 mimeType={mimeType}
                 content={content}
-                encoding="base64"
                 onDownload={() => messageApi.info("Content download initiated")}
               />
             </>

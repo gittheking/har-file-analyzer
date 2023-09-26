@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/har-file-analyzer/static/css/main.9b46dd6d.css",
+    "main.js": "/har-file-analyzer/static/js/main.6317636e.js",
+    "static/js/787.dd0400b8.chunk.js": "/har-file-analyzer/static/js/787.dd0400b8.chunk.js",
+    "index.html": "/har-file-analyzer/index.html",
+    "main.9b46dd6d.css.map": "/har-file-analyzer/static/css/main.9b46dd6d.css.map",
+    "main.6317636e.js.map": "/har-file-analyzer/static/js/main.6317636e.js.map",
+    "787.dd0400b8.chunk.js.map": "/har-file-analyzer/static/js/787.dd0400b8.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.9b46dd6d.css",
+    "static/js/main.6317636e.js"
+  ]
+}

@@ -117,7 +117,7 @@ export interface PostDataParams {
 }
 
 export interface ResponseContent {
-  size: number;
+  size?: number;
   compression?: number;
   mimeType: string;
   text?: string;

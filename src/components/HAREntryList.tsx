@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Card, List, Row, Tag, Radio, RadioChangeEvent } from "antd";
-import { Entry, HARFile, HARFileData } from "../common/types";
+import { Entry, HARFileData } from "../common/types";
 import { SelectedEntry } from "./FileDataView";
 
 interface HAREntryListProps {

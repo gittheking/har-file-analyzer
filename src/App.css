@@ -109,7 +109,7 @@
   padding: 12px 0;
 }
 
-.post-data-content {
+.post-data-content, .response-content {
   margin-top: 16px;
 }
 
@@ -197,4 +197,8 @@
 .tree-list .value {
   color: rgb(154, 135, 238);
   font-weight: 500;
+}
+
+.data-renderer-card_copy-button {
+  margin-right: 8px
 }

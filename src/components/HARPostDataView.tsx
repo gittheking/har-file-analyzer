@@ -1,17 +1,12 @@
 import { useMemo } from "react";
-import { Typography, Descriptions, Col, Empty, Card, Tabs, Button } from "antd";
-import { DownloadOutlined } from "@ant-design/icons";
-import { Entry, PostData } from "../common/types";
-import ContentRenderer from "./ContentRenderer";
+import { Typography, Descriptions, Col, Empty } from "antd";
+import { Entry } from "../common/types";
+import DataRendererCard from "./DataRendererCard";
 
-const { Text, Paragraph } = Typography;
+const { Text } = Typography;
 
 interface HARPostDataViewProps {
   entry: Entry;
-}
-
-interface DownloadPostDataButtonProps {
-  postData: PostData;
 }
 
 function getPostDataDescription(entry: Entry) {
@@ -25,67 +20,24 @@ function getPostDataDescription(entry: Entry) {
   ];
 }
 
-function getContentTabItems(postData: PostData | undefined) {
-  if (!postData) return [];
-
-  return [
-    {
-      key: "raw",
-      label: "Raw",
-      children: <Text>{postData.text}</Text>,
-    },
-    {
-      key: "parsed",
-      label: "Parsed",
-      children: (
-        <ContentRenderer mimeType={postData.mimeType} content={postData.text} />
-      ),
-    },
-  ];
-}
-
-function DownloadPostDataButton({ postData }: DownloadPostDataButtonProps) {
-  const href = `data:${postData.mimeType};charset=utf-8;base64,${btoa(
-    postData.text
-  )}`;
-  return (
-    <Button
-      type="link"
-      icon={<DownloadOutlined />}
-      target="_blank"
-      download="content"
-      href={href}
-      size="small"
-    >
-      Download Content
-    </Button>
-  );
-}
-
 function HARPostDataView({ entry }: HARPostDataViewProps) {
   const descriptionItems = useMemo(() => getPostDataDescription(entry), [
-    entry,
-  ]);
-  const tabItems = useMemo(() => getContentTabItems(entry.request.postData), [
     entry,
   ]);
 
   return (
     <Col style={{ padding: "12px 16px" }}>
       <Descriptions size="small" bordered items={descriptionItems} />
-      <Card className="post-data-content">
-        {entry.request?.postData ? (
-          <Tabs
-            defaultActiveKey="raw"
-            items={tabItems}
-            tabBarExtraContent={
-              <DownloadPostDataButton postData={entry.request.postData} />
-            }
-          />
-        ) : (
-          <Empty />
-        )}
-      </Card>
+      {entry.request?.postData ? (
+        <DataRendererCard
+          mimeType={entry.request.postData.mimeType}
+          content={entry.request.postData.text}
+          noContentText="No post data content available for this entry in the HAR file"
+          containerClassName="post-data-content"
+        />
+      ) : (
+        <Empty />
+      )}
     </Col>
   );
 }

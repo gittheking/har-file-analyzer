@@ -1,10 +1,4 @@
-import {
-  useEffect,
-  useState,
-  useReducer,
-  useMemo,
-  useLayoutEffect,
-} from "react";
+import { useState, useMemo, useLayoutEffect } from "react";
 import { Empty, Tabs } from "antd";
 import { Entry } from "../common/types";
 import HARRequestView from "./HARRequestView";
@@ -12,6 +6,7 @@ import HARResponseView from "./HARResponseView";
 import HARPostDataView from "./HARPostDataView";
 import { SelectedEntry } from "./FileDataView";
 import HARCookiesView from "./HARCookiesView";
+import HARResponseContentView from "./HARResponseContentView";
 
 interface HAREntryDataProps {
   selectedEntry: SelectedEntry;
@@ -58,7 +53,11 @@ function getTabItems(entry: Entry | null) {
       key: "response-content",
       children: (
         <TabContainer>
-          <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          {entry ? (
+            <HARResponseContentView entry={entry} />
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} />
+          )}
         </TabContainer>
       ),
     },
